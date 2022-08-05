@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.webjjang.board.mapper.BoardMapper">
+
+	<!-- 게시판 리스트 -->
+	<select id="list" resultType="com.webjjang.board.vo.BoardVO">
+		select no, title, writer, writeDate, hit 
+		from board order by no desc 
+		limit 10
+	</select>
+	
+	<!-- 전체 데이터 개수 가져오기 -->
+	<select id="getTotalRow" resultType="java.lang.Long">
+		select count(*) from board
+	</select>
+
+	<!-- 조회수 1증가 - update -->
+	<update id="increase">
+		update board set hit = hit + 1 where no = #{no}
+	</update>
+
+	<!-- 게시판 글보기 - select -->
+	<select id="view" resultType="com.webjjang.board.vo.BoardVO">
+		select no, title, content, writer, writeDate, hit 
+		from board 
+		where no = #{no}
+	</select>
+
+	<!-- 게시판 글쓰기 - insert -->
+	<insert id="write">
+		insert into board(no, title, content, writer) 
+		values (#{no}, #{title}, #{content}, #{writer})
+	</insert>
+
+	<!-- 게시판 글수정 - update -->
+	<update id="update">
+		update board set title = #{title}, content = #{content}, writer = #{writer} 
+		where no = #{no}
+	</update>
+	
+	<!-- 게시판 글삭제 - delete -->
+	<delete id="delete">
+		delete from board 
+		where no = #{no}
+	</delete>
+
+</mapper>
