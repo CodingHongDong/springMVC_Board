@@ -1,6 +1,5 @@
 package com.webjjang.member.vo;
 
-import java.util.Date;
 
 import lombok.Data;
 

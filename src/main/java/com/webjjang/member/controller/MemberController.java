@@ -1,7 +1,9 @@
 package com.webjjang.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.webjjang.member.service.MemberService;
 import com.webjjang.member.vo.LoginVO;
 import com.webjjang.member.vo.MemberVO;
+import com.webjjang.util.file.FileUtil;
 
 import lombok.extern.log4j.Log4j;
 
@@ -66,9 +70,20 @@ public class MemberController {
 	}
 	
 	// 회원가입 처리
-	public String write(MemberVO vo) throws Exception{
+	@PostMapping("/write.do")
+	public String write(MemberVO vo, HttpServletRequest request, RedirectAttributes rttr) throws Exception{
 		
+		// 회원 사진을 저장 위치
+		String path = "/upload/member";
+		
+		// 서버에 파일 저장하기 -> 서버에 저장된 파일명을 받아서 photo에 넣는다.
+		vo.setPhoto(FileUtil.upload(path, vo.getPhotoFile(), request));
+		
+		// 회원 가입 처리
 		service.write(vo);
+		
+		// redirect 하는 페이지에서 한번만 사용되는 속성값을 전달할 수 있다. -> session
+		rttr.addFlashAttribute("msg", "성공적으로 회원가입이 되셨습니다. \\n로그인 후 사용하세요.");
 		
 		return "redirect:/member/login.do";
 	}
@@ -78,6 +93,8 @@ public class MemberController {
 	public String idCheck(String id, Model model) throws Exception {
 		
 		model.addAttribute("id", service.idCheck(id));
+		
+		log.info("아이디 중복 체크 : " + id);
 		
 		return "member/idCheck";
 	}

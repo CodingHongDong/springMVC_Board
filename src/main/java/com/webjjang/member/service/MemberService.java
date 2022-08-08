@@ -24,7 +24,7 @@ public class MemberService {
 		return mapper.login(invo); 
 	}
 
-
+	// 아이디 중복 체크
 	public String idCheck(String id) throws Exception{
 		
 		return mapper.idCheck(id);
