@@ -78,7 +78,7 @@ public class FileUtil {
 	public static String upload(final String PATH, MultipartFile multiFile, HttpServletRequest request) throws Exception{
 		String fileFullName = "";
 		log.info("[" + multiFile.getOriginalFilename() + "]");
-		if(multiFile != null && multiFile.getOriginalFilename().equals("")) {
+		if(multiFile != null && !multiFile.getOriginalFilename().equals("")) {
 			log.info(multiFile.toString());
 			log.info(multiFile.getName());
 			String fileName = multiFile.getOriginalFilename();

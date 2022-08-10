@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,7 +56,7 @@ public class BoardController {
 	
 	// 게시판 리스트
 	@GetMapping("/list.do")
-	public String list(PageObject pageObject, Model model) throws Exception {
+	public String list(@ModelAttribute PageObject pageObject, Model model) throws Exception {
 		
 		log.info("게시판 리스트 처리");
 		

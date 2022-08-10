@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="pageNav" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,9 +49,23 @@ $(function() {
 		<td>${vo.hit}</td>
 	</tr>
 	</c:forEach>
+	
+	<c:if test="${pageObject.totalPage > 1 }">
+		<!-- 전체 페이지가 2페이지 이상이면 보여주는 부분 -->
+		<tr>
+			<td colspan="5">
+				<pageNav:pageNav listURI="list.do" 
+					pageObject="${pageObject }" />
+			</td>
+		</tr>
+	</c:if>
+	
+	<tr>
+		<td colspan="5">
+			<a href="write.do" class="btn btn-default">글쓰기</a>
+		</td>
+	</tr>
 </table>
-<br>
-	<a href="write.do" class="btn btn-default">글쓰기</a>
 </div>
 </body>
 </html>

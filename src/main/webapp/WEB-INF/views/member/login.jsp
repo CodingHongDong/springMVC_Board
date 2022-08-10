@@ -5,6 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인 폼</title>
+<script type="text/javascript">
+var msg = '${msg}';
+console.log(msg);
+if(msg != null && msg != ""){
+alert(msg);
+}
+</script>
 </head>
 <body>
 <div class="container">
@@ -21,6 +28,7 @@
 		</div>
 		<button class="btn btn-default">로그인</button>
 		<button type="button" class="btn btn-default" onclick="history.back()">취소</button>
+		<button class="btn btn-default" type="button" onclick="location.href='write.do'">회원가입</button>
 	</form>
 </div>
 </body>
